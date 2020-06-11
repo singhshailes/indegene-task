@@ -45,7 +45,9 @@ export default function MovieCard(props) {
                                 <div className='movie-card-allFields'>
                                 <p className="movie-card-title">{imdbData.Title}</p>
                                 <p className="movie-card-actors">Actors : {imdbData.Actors}</p>
+                                <p>Plot{imdbData.Plot}</p>
                                 <p className="movie-card-lang">Language: {imdbData.Language}</p>
+                                <p>Country:{imdbData.Country}</p>
                                 <p className="movie-card-awards">Awards: {imdbData.Awards}</p>
                                 <p className='movie-card-production'>Production: {imdbData.Production}</p>
                                 <p className="movie-card-rating">{Number(imdbData.imdbRating) > 7 ? "BoxOffice:hit" : "BoxOffice : Flop"}</p>

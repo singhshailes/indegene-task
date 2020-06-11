@@ -12,10 +12,9 @@ export default function Home(props) {
     const [movieName, setMovieName] = useState('');
     const [releaseYear, setReleaseYear] = useState('');
     const [movieInfoCollection, setMovieInfoCollection] = useState([])
-    const [activePage, setActivePage] = useState(1)
-
-    const [currentPage, setCurrentPage] = useState(1)
-    const [postsPerpage, setPostsPerPage] = useState(3)
+    const [currentPage,setCurrentPage] = useState(1)
+    const [lowIndex,setLowIndex] = useState(0)
+    const [highIndex,setHighIndex] = useState(3)
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -36,31 +35,25 @@ export default function Home(props) {
             setReleaseYear(e.target.value)
         }
     }
+    function handlePageChange (currentPage){
+        console.log('pagevalue',currentPage)
+        setCurrentPage(currentPage)
+        setLowIndex((currentPage - 1) * 3)
+        setHighIndex(currentPage*3)
 
-
-  
-
-
-    //get current posts
-    const IndexOfLastPost = currentPage * postsPerpage;
-    const IndexOfFirstPost = IndexOfLastPost - postsPerpage;
-    const currentPost = movieInfoCollection.slice(IndexOfFirstPost, IndexOfLastPost)
-
-    // //change page number
-    // const paginate = pageNumber => setCurrentPage(pageNumber);
-
+    }
     return (
         <div>
             <Header />
             <Navigation />
             <form className='movie-info-form'>
-                <h3>Movie info</h3>
+                <h3>Movie Info</h3>
                 <label>Movie Name</label>
                 <input type="text"
                     name="movieName"
                     value={movieName}
                     placeholder="Movie name.."
-                    onChange={handleChange} /><br/>
+                    onChange={handleChange} /><br />
 
                 <label>Release year</label>
                 <input type="text"
@@ -73,7 +66,7 @@ export default function Home(props) {
             <div className="movie-info-container">
                 {
                     movieInfoCollection.length > 0
-                        ? currentPost.map(item => (
+                        ? movieInfoCollection.slice(lowIndex,highIndex).map(item => (
                             <div key={item.imdbID}>
                                 <MovieCard
                                     name={item.Title}
@@ -85,11 +78,14 @@ export default function Home(props) {
                         : null
                 }
                 <Pagination
-                
+                    perPage={3}
+                    totalPages={Math.ceil(movieInfoCollection.length/3)}
+                    page={currentPage}
+                    goToPage={handlePageChange}
                 />
 
             </div>
-        
+
 
         </div>
     )
