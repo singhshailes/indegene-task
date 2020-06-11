@@ -6,7 +6,6 @@ export default function MovieCard(props) {
 
     const [showModalBox, setShowModalBox] = useState(false)
     const [imdbData, setImdbData] = useState([])
-    const [rating, setRating] = useState('')
     const [isLoading, setIsLoading] = useState(true)
 
 
@@ -17,14 +16,11 @@ export default function MovieCard(props) {
         fetch(url)
             .then(res => res.json())
             .then((res) => {
-               
                 setImdbData(res)
                 setIsLoading(false)
-                
+
             })
-
         setShowModalBox(true)
-
     }
 
 
@@ -41,15 +37,18 @@ export default function MovieCard(props) {
             <Modal show={showModalBox} onHide={handleClose}>
                 <Modal.Body>
                     {isLoading ? <p>Loading.. </p> :
-                        ( 
-                        <div>
-                            <img src={imdbData.Poster} alt="NA" />
-                            <p>{imdbData.Title}</p>
-                            <p>{imdbData.Actors}</p>
-                            <p>{imdbData.Language}</p>
-                            <p>{imdbData.Ratings[0].Value}</p>
-                    <p>{}</p>
-                        </div>)
+                        (
+                            <div className='movie-card-modal-content'>
+                                <div>
+                                <img  className="movie-card-image" src={imdbData.Poster} alt="NA" />
+                                </div>
+                                <div className='movie-card-allFields'>
+                                <p className="movie-card-title">{imdbData.Title}</p>
+                                <p className="movie-card-actors">Actors : {imdbData.Actors}</p>
+                                <p className="movie-card-lang">Language: {imdbData.Language}</p>
+                                <p className="movie-card-rating">{Number(imdbData.Ratings[0].Value.charAt(0)) > 7 ? "BoxOffice:hit" : "BoxOffice : Flop"}</p>
+                                </div>
+                            </div>)
                     }
                 </Modal.Body>
             </Modal>

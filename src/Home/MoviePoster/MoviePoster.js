@@ -37,19 +37,19 @@ export default function MoviePoster() {
 
             <form className='movie-poster-form'>
                 <h3>Movie Poster</h3>
-                <label>Movie Name</label><br/>
+                <label>Movie Name</label>
                 <input type="text"  
                     name="movieName" 
                     value={movieName} 
                     placeholder="Movie name.."
-                    onChange={handleChange}/><br/><br/>
+                    onChange={handleChange}/><br/>
 
-                <label>Release year</label><br/>
+                <label>Release year</label>
                 <input type="text" 
                     name="releaseYear" 
                     value={releaseYear} 
                     placeholder="Release year .."
-                    onChange={handleChange}/><br/><br/>
+                    onChange={handleChange}/><br/>
                 <button onClick={handleSubmit}>Submit</button>
             </form>
             <div className="movie-poster-container">

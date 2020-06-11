@@ -14,3 +14,15 @@
   cursor: pointer;
   width: fit-content;
 }
+.movie-card-modal-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.movie-card-allFields{
+  margin-left:10px;
+}
+
+.movie-card-image {
+  width:100%;
+
+}

@@ -12,8 +12,10 @@ export default function Home(props) {
     const [movieName, setMovieName] = useState('');
     const [releaseYear, setReleaseYear] = useState('');
     const [movieInfoCollection, setMovieInfoCollection] = useState([])
-    const [currentPage,setCurrentPage] = useState(1)
-    const [postsPerpage,setPostsPerPage] = useState(3)
+    const [activePage, setActivePage] = useState(1)
+
+    const [currentPage, setCurrentPage] = useState(1)
+    const [postsPerpage, setPostsPerPage] = useState(3)
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -35,13 +37,17 @@ export default function Home(props) {
         }
     }
 
-    //get current posts
-    const IndexOfLastPost = currentPage * postsPerpage; 
-    const IndexOfFirstPost = IndexOfLastPost - postsPerpage; 
-    const currentPost = movieInfoCollection.slice(IndexOfFirstPost,IndexOfLastPost)
 
-    //change page number
-    const paginate = pageNumber => setCurrentPage(pageNumber);
+  
+
+
+    //get current posts
+    const IndexOfLastPost = currentPage * postsPerpage;
+    const IndexOfFirstPost = IndexOfLastPost - postsPerpage;
+    const currentPost = movieInfoCollection.slice(IndexOfFirstPost, IndexOfLastPost)
+
+    // //change page number
+    // const paginate = pageNumber => setCurrentPage(pageNumber);
 
     return (
         <div>
@@ -49,42 +55,42 @@ export default function Home(props) {
             <Navigation />
             <form className='movie-info-form'>
                 <h3>Movie info</h3>
-                <label>Movie Name</label><br />
+                <label>Movie Name</label>
                 <input type="text"
                     name="movieName"
                     value={movieName}
                     placeholder="Movie name.."
-                    onChange={handleChange} /><br /><br />
+                    onChange={handleChange} /><br/>
 
-                <label>Release year</label><br />
+                <label>Release year</label>
                 <input type="text"
                     name="releaseYear"
                     value={releaseYear}
                     placeholder="Release year .."
-                    onChange={handleChange} /><br /><br />
+                    onChange={handleChange} /><br />
                 <button onClick={handleSubmit}>Submit</button>
             </form>
             <div className="movie-info-container">
-            {
-                movieInfoCollection.length > 0
-                    ? currentPost.map(item => (
-                        <div key={item.imdbID}>
-                            <MovieCard
-                                name={item.Title}
-                                year={item.Year}
-                                imdbID={item.imdbID}
-                            />
-                        </div>
-                    ))
-                    : null
-            }
-            
+                {
+                    movieInfoCollection.length > 0
+                        ? currentPost.map(item => (
+                            <div key={item.imdbID}>
+                                <MovieCard
+                                    name={item.Title}
+                                    year={item.Year}
+                                    imdbID={item.imdbID}
+                                />
+                            </div>
+                        ))
+                        : null
+                }
+                <Pagination
+                
+                />
+
             </div>
-            
-            <Pagination
-                postsPerpage={postsPerpage}
-                totalPosts={movieInfoCollection.length}
-            />
+        
+
         </div>
     )
 

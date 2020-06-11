@@ -6,6 +6,7 @@ input[type=text] {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    margin-left:20px;
 }
 .movie-poster-form{
    text-align: center;
