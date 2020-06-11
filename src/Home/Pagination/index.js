@@ -9,7 +9,6 @@ const FIRST_PAGE = 1
 
 export default function Pagination(props) {
     const { page, perPage, totalPages, goToPage } = props,
-
         pageEl = useRef(null)
 
     function isValidPage(currentPage) {
@@ -26,7 +25,6 @@ export default function Pagination(props) {
         if (!isValidPage(page)) {
             return
         }
-
         return goToPage(page)
     }
 
@@ -53,14 +51,9 @@ export default function Pagination(props) {
     }
 
     function resetPageElText() {
-
         setPageElText(page)
     }
-
-
     useEffect(resetPageElText, [page])
-
-
     return (
         <div >
             <IconButton onClick={handleGoToFirstPage} >
@@ -71,10 +64,9 @@ export default function Pagination(props) {
             </IconButton>
             <span >
                 Showing page{' '}
-
                 <span ref={pageEl} />
                 {' '}
-        of {totalPages}
+                of {totalPages}
             </span>
             <IconButton onClick={handleGoToNextPage} >
                 <NavigateNextIcon />

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Header from '../atoms/Header/Header'
-import { Link, Route } from 'react-router-dom'
 import Navigation from './Navigation'
 import './Home.css'
 import MovieCard from '../molecules/MovieCard/MovieCard'
@@ -10,11 +9,13 @@ import Pagination from './Pagination'
 
 export default function Home(props) {
     const [movieName, setMovieName] = useState('');
-    const [releaseYear, setReleaseYear] = useState('');
+    const [releaseYear, setReleaseYear] = useState();
     const [movieInfoCollection, setMovieInfoCollection] = useState([])
-    const [currentPage,setCurrentPage] = useState(1)
-    const [lowIndex,setLowIndex] = useState(0)
-    const [highIndex,setHighIndex] = useState(3)
+    const [error, setError] = useState()
+    //pagination
+    const [currentPage, setCurrentPage] = useState(1)
+    const [lowIndex, setLowIndex] = useState(0)
+    const [highIndex, setHighIndex] = useState(3)
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -29,17 +30,30 @@ export default function Home(props) {
     const handleChange = (e) => {
         e.preventDefault()
         if (e.target.name === 'movieName') {
-            setMovieName(e.target.value)
+            if(e.target.value!==' '){
+                setError('')
+                setMovieName(e.target.value)
+            }
+            else{
+                setError('Please enter a movie name')
+            }
+            
         }
         if (e.target.name === 'releaseYear') {
-            setReleaseYear(e.target.value)
+            if (e.target.value >= 1950 && e.target.value <= 2020){
+                setError('')
+                setReleaseYear(e.target.value)
+            }
+            else{
+                setError('Year invalid')
+            }
+                
         }
     }
-    function handlePageChange (currentPage){
-        console.log('pagevalue',currentPage)
+    function handlePageChange(currentPage) {
         setCurrentPage(currentPage)
         setLowIndex((currentPage - 1) * 3)
-        setHighIndex(currentPage*3)
+        setHighIndex(currentPage * 3)
 
     }
     return (
@@ -56,17 +70,18 @@ export default function Home(props) {
                     onChange={handleChange} /><br />
 
                 <label>Release year</label>
-                <input type="text"
+                <input type="number"
                     name="releaseYear"
                     value={releaseYear}
                     placeholder="Release year .."
                     onChange={handleChange} /><br />
                 <button onClick={handleSubmit}>Submit</button>
+                <p style={{color:'red'}}>{error}</p>
             </form>
             <div className="movie-info-container">
                 {
                     movieInfoCollection.length > 0
-                        ? movieInfoCollection.slice(lowIndex,highIndex).map(item => (
+                        ? movieInfoCollection.slice(lowIndex, highIndex).map(item => (
                             <div key={item.imdbID}>
                                 <MovieCard
                                     name={item.Title}
@@ -77,16 +92,15 @@ export default function Home(props) {
                         ))
                         : null
                 }
+                </div>
+                <div className="pagination-center">
                 <Pagination
                     perPage={3}
-                    totalPages={Math.ceil(movieInfoCollection.length/3)}
+                    totalPages={Math.ceil(movieInfoCollection.length / 3)}
                     page={currentPage}
                     goToPage={handlePageChange}
                 />
-
-            </div>
-
-
+                </div>                     
         </div>
     )
 
