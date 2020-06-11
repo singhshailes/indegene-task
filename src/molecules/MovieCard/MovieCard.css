@@ -1,0 +1,16 @@
+.movie-card-container{
+  box-shadow: 0 0 4px 2px rgba(0,0,0,0.2);
+  transition: 0.3s;
+  padding: 20px;
+  height: auto;   
+}
+.btn-more-info{
+  border-radius: 5px;
+  background-color: yellow;
+  font-size: 18px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 5px 15px;
+  cursor: pointer;
+  width: fit-content;
+}

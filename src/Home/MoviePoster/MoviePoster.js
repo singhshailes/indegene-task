@@ -52,7 +52,7 @@ export default function MoviePoster() {
                     onChange={handleChange}/><br/><br/>
                 <button onClick={handleSubmit}>Submit</button>
             </form>
-
+            <div className="movie-poster-container">
             {
                 movieCollection.length>0 
                 ? movieCollection.map(item=>
@@ -61,6 +61,8 @@ export default function MoviePoster() {
                 </div>)
                 :null
             }
+            </div>
+            
 
         </div>
     )
