@@ -20,9 +20,21 @@
 }
 .movie-card-allFields{
   margin-left:10px;
+  font-size:12px;
 }
 
 .movie-card-image {
   width:100%;
+}
 
+.movie-card-actors{
+  
+  color: gray;
+  font-style:italic;
+}
+
+
+.movie-card-rating{
+  
+  font-weight: 700;
 }
