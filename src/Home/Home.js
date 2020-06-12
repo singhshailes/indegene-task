@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Header from '../atoms/Header/Header'
-import Navigation from './Navigation'
+import Navigation from './Navigation/Navigation'
 import './Home.css'
 import MovieCard from '../molecules/MovieCard/MovieCard'
 import Pagination from './Pagination'
@@ -22,11 +22,16 @@ export default function Home(props) {
         let url = 'http://www.omdbapi.com/?s=' + movieName + '&y=' + releaseYear + '&apikey=328cb361'
         fetch(url)
             .then(res => res.json())
-            .then(res => setMovieInfoCollection(res.Search))
+            .then(res => {
+                if(res.Search){
+                    setMovieInfoCollection(res.Search)
+                    
+                }
+                else(
+                    setMovieInfoCollection([])
+                )
+            })
     }
-
-
-
     const handleChange = (e) => {
         e.preventDefault()
         if (e.target.name === 'movieName') {
@@ -40,12 +45,13 @@ export default function Home(props) {
             
         }
         if (e.target.name === 'releaseYear') {
-            if (e.target.value >= 1950 && e.target.value <= 2020){
-                setError('')
-                setReleaseYear(e.target.value)
+            
+            if (e.target.value < 1950 && e.target.value > 2020){
+                setError('Year invalid')                
             }
             else{
-                setError('Year invalid')
+                setError('')
+                setReleaseYear(e.target.value)
             }
                 
         }
@@ -67,7 +73,8 @@ export default function Home(props) {
                     name="movieName"
                     value={movieName}
                     placeholder="Movie name.."
-                    onChange={handleChange} /><br />
+                    onChange={handleChange} 
+                    /><br />
 
                 <label>Release year</label>
                 <input type="number"
@@ -80,7 +87,7 @@ export default function Home(props) {
             </form>
             <div className="movie-info-container">
                 {
-                    movieInfoCollection.length > 0
+                    movieInfoCollection.length > 0 
                         ? movieInfoCollection.slice(lowIndex, highIndex).map(item => (
                             <div key={item.imdbID}>
                                 <MovieCard
@@ -90,7 +97,7 @@ export default function Home(props) {
                                 />
                             </div>
                         ))
-                        : null
+                        : <p style={{textAlign:"center"}}>Nothing To Display</p>
                 }
                 </div>
                 <div className="pagination-center">

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Header from '../../atoms/Header/Header'
-import Navigation from '../Navigation'
+import Navigation from '../Navigation/Navigation'
 import './MoviePoster.css'
 
 export default function MoviePoster() {
@@ -14,7 +14,14 @@ export default function MoviePoster() {
         let url='http://www.omdbapi.com/?s='+movieName+'&y='+releaseYear+'&apikey=328cb361'
         fetch(url)
         .then(res=>res.json())
-        .then(res=>setMovieCollection(res.Search))               
+        .then(res=>{
+            if(res.Search){
+                setMovieCollection(res.Search)
+            }
+            else(
+                setMovieCollection([])
+            )
+        })               
     }
 
     console.log('movie collection',movieCollection)
@@ -59,7 +66,7 @@ export default function MoviePoster() {
                 <div>
                     <img src={item.Poster} alt='error'/>
                 </div>)
-                :null
+                :(<p style={{textAlign:"center"}}>Nothing To Display</p>)
             }
             </div>
             

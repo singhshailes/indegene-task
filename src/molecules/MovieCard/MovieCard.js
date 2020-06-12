@@ -8,8 +8,6 @@ export default function MovieCard(props) {
     const [imdbData, setImdbData] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
-
-
     const showModal = () => {
         setIsLoading(true)
         let url = 'http://www.omdbapi.com/?i=' + props.imdbID + '&plot=full&apikey=328cb361'
@@ -22,12 +20,7 @@ export default function MovieCard(props) {
             })
         setShowModalBox(true)
     }
-
-
     const handleClose = () => setShowModalBox(false);
-
-    console.log('imdbrating', imdbData)
-
     return (
         <div className="movie-card-container">
             <p>{props.name}</p>
